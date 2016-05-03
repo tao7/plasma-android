@@ -8,8 +8,9 @@
 
     <cn.changwentao.plasma.PlasmaView
         android:id="@+id/plasmaView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="64px"
+        android:layout_height="64px"
+        android:layout_centerInParent="true"
         android:background="@android:color/black"
         app:velocity="@dimen/plasma_velocity" />
 </RelativeLayout>

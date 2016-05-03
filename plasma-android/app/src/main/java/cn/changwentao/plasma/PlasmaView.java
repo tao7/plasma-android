@@ -8,6 +8,7 @@ package cn.changwentao.plasma;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
@@ -23,9 +24,12 @@ public class PlasmaView extends View {
     private int mPaddingTop;
     private int mPaddingRight;
     private int mPaddingBottom;
+    private int mContentWidth;
+    private int mContentHeight;
 
     // Millisecond between two frame.
     private int mVelocity;
+    private long mStartTime;
     private boolean mPause = true;
     private Paint mPaint;
 
@@ -59,12 +63,54 @@ public class PlasmaView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        int contentWidth = getWidth() - mPaddingLeft - mPaddingRight;
-        int contentHeight = getHeight() - mPaddingTop - mPaddingBottom;
+        if (mPause) {
+            return;
+        }
 
-        mPaint.setColor(0xffff0000);
-        canvas.drawText("哈哈哈", 30f, 100f, mPaint);
+
+        long currentTime = time();
+
+
+        canvas.save();
+        canvas.translate(mPaddingLeft, mPaddingTop);
+        for (int x = 0; x < mContentWidth; x++) {
+            for (int y = 0; y < mContentHeight; y++) {
+//                int color = (int) (128.0f + (128.0f * Math.sin((x + currentTime) / 8.0f)));
+//                mPaint.setColor(Color.rgb(color, color, color));
+//                canvas.drawLine(x, 0, x, mContentHeight, mPaint);
+
+                float c1 = (float) Math.sin(x * Math.cos(currentTime) * 16.0 + currentTime * 4.0);
+                float c2 = (float) Math.cos(y * 8.0 + currentTime);
+                float c3 = (float) Math.cos(y * 14.0) + (float) Math.sin(currentTime);
+                float p = (c1 + c2 + c3) / 3.0f;
+
+                if (p < 0.2) {
+                    mPaint.setColor(sColors[0]);
+                } else if (p < 0.4) {
+                    mPaint.setColor(sColors[1]);
+                } else if (p < 0.6) {
+                    mPaint.setColor(sColors[2]);
+                } else if (p < 0.8) {
+                    mPaint.setColor(sColors[3]);
+                } else {
+                    mPaint.setColor(sColors[4]);
+                }
+
+                canvas.drawPoint(x, y, mPaint);
+            }
+        }
+        canvas.restore();
+        invalidate();
     }
+
+    //private float dx(int x, int y){
+    //float x1 = 0.1f*mContentWidth,x2=0.7f*mContentWidth,y1=0.2f*mContentHeight,y2=0.9f*mContentHeight;
+    // Math.sqrt(Math.pow(x-x1,2)+Math.pow(-x1,2)+)
+    //}
+
+    //private float dy(int x, int y){
+    //float x1 = 0.1f,x2=0.7f,y1=0.2f,y2=0.9f;
+    //}
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -74,14 +120,21 @@ public class PlasmaView extends View {
         mPaddingTop = getPaddingTop();
         mPaddingRight = getPaddingRight();
         mPaddingBottom = getPaddingBottom();
+        mContentWidth = getWidth() - mPaddingLeft - mPaddingRight;
+        mContentHeight = getHeight() - mPaddingTop - mPaddingBottom;
+    }
+
+    private long time() {
+        return (System.currentTimeMillis() - mStartTime) / 10;
     }
 
     /**
      * Start plasma animation.
      */
     public void play() {
-        if(mPause) {
+        if (mPause) {
             mPause = false;
+            mStartTime = System.currentTimeMillis();
             invalidate();
         }
     }
@@ -90,7 +143,7 @@ public class PlasmaView extends View {
      * Pause plasma animation.
      */
     public void pause() {
-        if(!mPause) {
+        if (!mPause) {
             mPause = true;
             invalidate();
         }
