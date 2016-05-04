@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPlasmaView = new GLSurfaceView(this);
+        mPlasmaView.setEGLContextClientVersion(2); // Won't check gl version, just use 2.0.
         mPlasmaView.setRenderer(new PlasmaRenderer(this));
 
         setContentView(mPlasmaView);
