@@ -1,4 +1,4 @@
 <resources>
     <!-- Default millisecond between two frame. -->
-    <item name="plasma_velocity" format="integer" type="dimen">50</item>
+    <integer translatable="false" name="plasma_velocity">50</integer>
 </resources>

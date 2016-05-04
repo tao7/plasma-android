@@ -1,5 +1,0 @@
-<resources>
-    <declare-styleable name="PlasmaView">
-        <attr name="velocity" format="integer" />
-    </declare-styleable>
-</resources>

@@ -5,29 +5,31 @@
  */
 package cn.changwentao.plasma;
 
-import android.support.v7.app.AppCompatActivity;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    private PlasmaView mPlasmaView;
+    private GLSurfaceView mPlasmaView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        mPlasmaView = new GLSurfaceView(this);
+        mPlasmaView.setRenderer(new PlasmaRenderer(this));
 
-        mPlasmaView = (PlasmaView) findViewById(R.id.plasmaView);
+        setContentView(mPlasmaView);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mPlasmaView.play();
+        mPlasmaView.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mPlasmaView.pause();
+        mPlasmaView.onPause();
     }
 }
