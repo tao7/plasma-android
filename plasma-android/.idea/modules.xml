@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/plasma-android.iml" filepath="$PROJECT_DIR$/plasma-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/plasma-android-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/plasma-android-app.iml" group="plasma-android/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/plasma-android-plasma-android.iml" filepath="$PROJECT_DIR$/.idea/modules/plasma-android-plasma-android.iml" group="plasma-android" />
     </modules>
   </component>
 </project>
